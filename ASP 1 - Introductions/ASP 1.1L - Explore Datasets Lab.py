@@ -35,7 +35,7 @@
 
 # COMMAND ----------
 
-# <FILL_IN>
+# MAGIC %fs ls /mnt/dbacademy-users/
 
 # COMMAND ----------
 
@@ -47,8 +47,7 @@
 
 # COMMAND ----------
 
-# TODO
-files = FILL_IN
+files = dbutils.fs.ls('mnt/dbacademy-users')
 display(files)
 
 # COMMAND ----------
@@ -63,8 +62,39 @@ display(files)
 
 # COMMAND ----------
 
+# MAGIC %python
+# MAGIC spark.conf.set("arri.users", DA.paths.users)
+# MAGIC spark.conf.set("arri.products", DA.paths.products)
+# MAGIC spark.conf.set("arri.sales", DA.paths.sales)
+# MAGIC spark.conf.set("arri.events", DA.paths.events)
+
+# COMMAND ----------
+
 # MAGIC %sql
-# MAGIC -- TODO
+# MAGIC CREATE TABLE IF NOT EXISTS users
+# MAGIC USING DELTA
+# MAGIC OPTIONS (path = "${arri.users}");
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC CREATE TABLE IF NOT EXISTS products
+# MAGIC USING DELTA
+# MAGIC OPTIONS (path = "${arri.products}");
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC CREATE TABLE IF NOT EXISTS sales
+# MAGIC USING DELTA
+# MAGIC OPTIONS (path = "${arri.sales}");
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC CREATE TABLE IF NOT EXISTS events
+# MAGIC USING DELTA
+# MAGIC OPTIONS (path = "${arri.events}");
 
 # COMMAND ----------
 
@@ -100,7 +130,7 @@ display(files)
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC -- TODO
+# MAGIC SELECT * FROM products
 
 # COMMAND ----------
 
@@ -126,7 +156,7 @@ display(files)
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC -- TODO
+# MAGIC SELECT AVG(purchase_revenue_in_usd) FROM sales
 
 # COMMAND ----------
 
@@ -155,7 +185,7 @@ display(files)
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC -- TODO
+# MAGIC SELECT DISTINCT event_name FROM events
 
 # COMMAND ----------
 
